@@ -25,7 +25,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 // =============================================
 export const signInWithGoogle = async () => {
   // GitHub Pages punya subpath → gunakan PUBLIC_URL
-  const redirectTo = `${process.env.PUBLIC_URL}/`;  
+  const redirectTo = `${process.env.PUBLIC_URL}/jadwal-rh/`;  
   return await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: { redirectTo },
