@@ -61,7 +61,7 @@ const Login = ({ onLogin }) => {
             </div>
             
             <h1 className="text-5xl font-bold mb-6 leading-tight">
-              Kelola Jadwal
+              Kelola Jadwal Beta
               <span className="block bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
                 Pelajaran
               </span>

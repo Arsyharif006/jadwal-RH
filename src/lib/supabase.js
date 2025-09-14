@@ -23,15 +23,15 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 // =============================================
 // AUTH HELPERS
 // =============================================
-export const signInWithGoogle = async () => {
-const { data, error } = await supabase.auth.signInWithOAuth({
-  provider: 'google',
-  options: {
-    redirectTo: window.location.origin + "/jadwal-rh",  
-  },
-});
-};
 
+export const signInWithGoogle = async () => {
+  return await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: `${window.location.origin}/jadwal-rh`, 
+    },
+  });
+};
 // Sign out
 export const signOut = async () => {
   const { error } = await supabase.auth.signOut()
