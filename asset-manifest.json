@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/Jadwal-RH/static/css/main.e046d0b2.css",
+    "main.js": "/Jadwal-RH/static/js/main.877b38c5.js",
+    "static/js/453.0c826f7f.chunk.js": "/Jadwal-RH/static/js/453.0c826f7f.chunk.js",
+    "index.html": "/Jadwal-RH/index.html",
+    "main.e046d0b2.css.map": "/Jadwal-RH/static/css/main.e046d0b2.css.map",
+    "main.877b38c5.js.map": "/Jadwal-RH/static/js/main.877b38c5.js.map",
+    "453.0c826f7f.chunk.js.map": "/Jadwal-RH/static/js/453.0c826f7f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e046d0b2.css",
+    "static/js/main.877b38c5.js"
+  ]
+}
