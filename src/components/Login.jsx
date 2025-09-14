@@ -8,22 +8,25 @@ import { signInWithGoogle, formatSupabaseError } from '../lib/supabase';
 const Login = ({ onLogin }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(false);
 
   const handleGoogleLogin = async () => {
     setIsLoading(true);
     setError(null);
-    
+    setSuccess(false);
+
     try {
       const { data, error: authError } = await signInWithGoogle();
-      
+
       if (authError) {
         setError(formatSupabaseError(authError));
         setIsLoading(false);
         return;
       }
 
-      // Auth success - the redirect will handle the rest
-      // onLogin will be called from App.js after redirect
+      // Tidak redirect → tampilkan pesan sukses saja
+      setSuccess(true);
+      setIsLoading(false);
     } catch (error) {
       console.error('Login error:', error);
       setError('Terjadi kesalahan saat login');

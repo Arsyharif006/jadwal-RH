@@ -29,7 +29,7 @@ export const signInWithGoogle = async () => {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: `${window.location.origin}/dashboard`
+      redirectTo: null
     }
   })
   return { data, error }
@@ -58,7 +58,7 @@ export const getProfile = async (userId) => {
     .select('*')
     .eq('id', userId)
     .single()
-  
+
   return { data, error }
 }
 
@@ -73,7 +73,7 @@ export const updateProfile = async (userId, updates) => {
     .eq('id', userId)
     .select()
     .single()
-  
+
   return { data, error }
 }
 
@@ -89,7 +89,7 @@ export const createProfile = async (user) => {
     })
     .select()
     .single()
-  
+
   return { data, error }
 }
 
@@ -110,7 +110,7 @@ export const updateClass = async (classId, updates) => {
     .eq('id', classId)
     .select()
     .single()
-  
+
   return { data, error }
 }
 
@@ -127,7 +127,7 @@ export const createClass = async (classData) => {
     })
     .select()
     .single()
-  
+
   return { data, error }
 }
 
@@ -138,7 +138,7 @@ export const searchClasses = async (searchTerm) => {
     .select('*')
     .or(`name.ilike.%${searchTerm}%,description.ilike.%${searchTerm}%,prodi.ilike.%${searchTerm}%`)
     .eq('is_active', true)
-  
+
   return { data, error }
 }
 
@@ -149,7 +149,7 @@ export const getClassWithStats = async (classId) => {
     .select('*')
     .eq('id', classId)
     .single()
-  
+
   return { data, error }
 }
 
@@ -166,7 +166,7 @@ export const getUserClasses = async (userId) => {
     `)
     .eq('user_id', userId)
     .eq('status', 'approved')
-  
+
   return { data, error }
 }
 
@@ -187,7 +187,7 @@ export const getUserMemberships = async (userId) => {
       )
     `)
     .eq('user_id', userId)
-  
+
   return { data, error }
 }
 
@@ -199,7 +199,7 @@ export const getMembershipStatus = async (userId, classId) => {
     .eq('user_id', userId)
     .eq('class_id', classId)
     .single()
-  
+
   return { data, error }
 }
 
@@ -210,7 +210,7 @@ export const checkClassAvailability = async (classId) => {
     .select('member_limit, approved_members, remaining_quota, is_full')
     .eq('id', classId)
     .single()
-  
+
   return { data, error }
 }
 
@@ -222,21 +222,21 @@ export const checkClassAvailability = async (classId) => {
 export const requestJoinClass = async (classId, userId) => {
   // First check if class is full
   const { data: classStats, error: statsError } = await checkClassAvailability(classId)
-  
+
   if (statsError) {
     return { data: null, error: statsError }
   }
-  
+
   if (classStats && classStats.is_full) {
-    return { 
-      data: null, 
-      error: { 
+    return {
+      data: null,
+      error: {
         message: `Kelas sudah penuh. Batas maksimal ${classStats.member_limit} anggota.`,
         code: 'CLASS_FULL'
       }
     }
   }
-  
+
   const { data, error } = await supabase
     .from('class_members')
     .insert({
@@ -246,7 +246,7 @@ export const requestJoinClass = async (classId, userId) => {
     })
     .select()
     .single()
-  
+
   return { data, error }
 }
 
@@ -257,28 +257,28 @@ export const getClassMembers = async (classId) => {
     .select('*')
     .eq('class_id', classId)
     .order('created_at', { ascending: false })
-  
+
   return { data, error }
 }
 
 // Update member status (approve/reject) with capacity check
 export const updateMemberStatus = async (memberId, status) => {
-  const updates = { 
+  const updates = {
     status,
     updated_at: new Date().toISOString()
   }
-  
+
   if (status === 'approved') {
     updates.joined_at = new Date().toISOString()
   }
-  
+
   const { data, error } = await supabase
     .from('class_members')
     .update(updates)
     .eq('id', memberId)
     .select()
     .single()
-  
+
   return { data, error }
 }
 
@@ -289,7 +289,7 @@ export const getClassMemberStats = async (classId) => {
     .select('member_limit, current_members, approved_members, pending_members, remaining_quota, is_full')
     .eq('id', classId)
     .single()
-  
+
   return { data, error }
 }
 
@@ -312,7 +312,7 @@ export const createSchedule = async (scheduleData) => {
     })
     .select()
     .single()
-  
+
   return { data, error }
 }
 
@@ -324,7 +324,7 @@ export const getClassSchedules = async (classId) => {
     .eq('class_id', classId)
     .order('schedule_date', { ascending: true })
     .order('schedule_time', { ascending: true })
-  
+
   return { data, error }
 }
 
@@ -339,7 +339,7 @@ export const updateSchedule = async (scheduleId, updates) => {
     .eq('id', scheduleId)
     .select()
     .single()
-  
+
   return { data, error }
 }
 
@@ -349,7 +349,7 @@ export const deleteSchedule = async (scheduleId) => {
     .from('schedules')
     .delete()
     .eq('id', scheduleId)
-  
+
   return { data, error }
 }
 
@@ -365,7 +365,7 @@ export const getUserNotifications = async (userId, limit = 50) => {
     .eq('user_id', userId)
     .order('created_at', { ascending: false })
     .limit(limit)
-  
+
   return { data, error }
 }
 
@@ -375,7 +375,7 @@ export const markNotificationRead = async (notificationId) => {
     .from('notifications')
     .update({ is_read: true })
     .eq('id', notificationId)
-  
+
   return { data, error }
 }
 
@@ -386,7 +386,7 @@ export const markAllNotificationsRead = async (userId) => {
     .update({ is_read: true })
     .eq('user_id', userId)
     .eq('is_read', false)
-  
+
   return { data, error }
 }
 
@@ -440,7 +440,7 @@ export const subscribeToNotifications = (userId, callback) => {
 // Format error messages
 export const formatSupabaseError = (error) => {
   if (!error) return null
-  
+
   // Common error mappings
   const errorMappings = {
     'duplicate key value violates unique constraint': 'Data sudah ada',
@@ -449,15 +449,15 @@ export const formatSupabaseError = (error) => {
     'permission denied': 'Tidak memiliki izin untuk aksi ini',
     'kelas sudah penuh': 'Kelas sudah mencapai batas maksimal anggota'
   }
-  
+
   const errorMessage = error.message || error.details || 'Terjadi kesalahan'
-  
+
   for (const [key, value] of Object.entries(errorMappings)) {
     if (errorMessage.toLowerCase().includes(key)) {
       return value
     }
   }
-  
+
   return errorMessage
 }
 
@@ -468,7 +468,7 @@ export const isClassCreator = async (userId, classId) => {
     .eq('id', classId)
     .eq('creator_id', userId)
     .single()
-  
+
   return { isCreator: !!data && !error, error }
 }
 
@@ -480,6 +480,6 @@ export const isClassMember = async (userId, classId) => {
     .eq('class_id', classId)
     .eq('status', 'approved')
     .single()
-  
+
   return { isMember: !!data && !error, error }
 }
