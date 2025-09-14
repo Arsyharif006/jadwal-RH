@@ -24,12 +24,12 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 // AUTH HELPERS
 // =============================================
 export const signInWithGoogle = async () => {
-  // GitHub Pages punya subpath → gunakan PUBLIC_URL
-  const redirectTo = `${process.env.PUBLIC_URL}/jadwal-rh/`;  
-  return await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: { redirectTo },
-  });
+const { data, error } = await supabase.auth.signInWithOAuth({
+  provider: 'google',
+  options: {
+    redirectTo: window.location.origin + "/jadwal-rh",  
+  },
+});
 };
 
 // Sign out
