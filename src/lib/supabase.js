@@ -23,17 +23,15 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
 // =============================================
 // AUTH HELPERS
 // =============================================
-
-// Sign in with Google
 export const signInWithGoogle = async () => {
-  const { data, error } = await supabase.auth.signInWithOAuth({
+  const redirectTo = `${window.location.origin}/jadwal-rh/`; 
+  return await supabase.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: null
-    }
-  })
-  return { data, error }
-}
+      redirectTo, // ✅ redirect langsung ke /jadwal-rh/
+    },
+  });
+};
 
 // Sign out
 export const signOut = async () => {
