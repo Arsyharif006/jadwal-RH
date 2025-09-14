@@ -44,7 +44,7 @@ const Login = ({ onLogin }) => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50 to-emerald-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50 to-emerald-100 relative">
       {/* Desktop Layout */}
       <div className="hidden lg:flex min-h-screen">
         {/* Left Side - Hero Section */}
@@ -167,9 +167,9 @@ const Login = ({ onLogin }) => {
       </div>
 
       {/* Mobile Layout */}
-      <div className="lg:hidden min-h-screen flex flex-col justify-center px-6 py-12">
+      <div className="lg:hidden min-h-screen flex flex-col justify-between px-6 py-12">
         {/* Mobile Content */}
-        <div className="flex flex-col items-center space-y-8">
+        <div className="flex flex-col items-center space-y-8 flex-grow justify-center">
           {/* Logo and Title */}
           <div className="text-center">
             <div className="bg-gradient-to-r from-green-500 to-emerald-600 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl">
@@ -238,6 +238,22 @@ const Login = ({ onLogin }) => {
                 </a>{' '}
                 kami
               </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Footer - Creator and Version Info */}
+      <div className="lg:hidden absolute bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-t border-gray-200">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-600 space-y-2 sm:space-y-0">
+            <div className="flex items-center space-x-1">
+              <span>Dibuat oleh</span>
+              <span className="font-semibold text-green-600">arsyrf</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <span>Versi Beta</span>
+              <span className="font-mono bg-gray-100 px-2 py-1 rounded text-xs">3.2.0</span>
             </div>
           </div>
         </div>
